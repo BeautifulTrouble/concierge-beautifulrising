@@ -98,7 +98,7 @@ exports.load = function() {
                     texts = JSON.parse(body);
                 });
     // Get the module objects from the API
-    // TODO remove this ridiculousness when there's a /modules endpoint 
+    // TODO remove this ridiculousness when there's a /modules endpoint
     request.get(modulesEndpoint,
         function(error, response, body) {
             var modulesNoId = JSON.parse(body);
@@ -110,7 +110,7 @@ exports.load = function() {
                 module.simple_id = simpleId;
                 return module;
             });
-            modules = _.reject(modulesAll, function(module) { 
+            modules = _.reject(modulesAll, function(module) {
                     // Get rid of snapshots and gallery entries
                     return module['module-type'] === 'snapshot';
             });
@@ -149,7 +149,7 @@ var processMessage = function(api, event, record) {
     var currentModule = user.currentModule;
     // If the user has set a language, use it, otherwise EN
     var language  = user.language || 'en';
-    text = texts[language];
+    var text = texts[language];
     if ( event.arguments[0] === command + 'start' ) {
         //=================================================================
         // User sent /start command (could send this always for new users)
@@ -376,7 +376,7 @@ exports.run = function(api, event) {
         if ( err ) {
             filelog.info(err);
             if (err.error === 'not_found') { // No user, create one
-                user = { // Object that we want to persist
+                var user = { // Object that we want to persist
                     sender_id: event.sender_id,
                     name: userFullName,
                     name_pretty: event.sender_name,
