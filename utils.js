@@ -1,5 +1,5 @@
 var cradle = require('cradle'); // Persistance
-var db = new(cradle.Connection)().database('_users');
+var db = new(cradle.Connection)().database('testing_users');
 
 exports.test = function() {
     console.log('Running test...');
