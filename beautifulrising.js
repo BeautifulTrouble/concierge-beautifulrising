@@ -16,7 +16,7 @@ var uniqueModules;
 var utils = require('./utils.js');
 var password = require('password');
 var cradle = require('cradle'); // Persistance
-var db = new(cradle.Connection)().database('_users');
+var db = new(cradle.Connection)().database('_users_testing');
 
 // TODO move all of this to its own logging.js
 // Set up logging
@@ -40,7 +40,8 @@ winston.loggers.add('couchlog', {
     },
     couchdb: {
         host: 'localhost',
-        port: 5984
+        port: 5984,
+        db: 'winston-testing'
     }
 });
 var couchlog = winston.loggers.get('couchlog');
@@ -98,7 +99,7 @@ exports.load = function() {
                     texts = JSON.parse(body);
                 });
     // Get the module objects from the API
-    // TODO remove this ridiculousness when there's a /modules endpoint 
+    // TODO remove this ridiculousness when there's a /modules endpoint
     request.get(modulesEndpoint,
         function(error, response, body) {
             var modulesNoId = JSON.parse(body);
