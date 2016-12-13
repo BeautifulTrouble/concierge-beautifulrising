@@ -16,7 +16,7 @@ var uniqueModules;
 var utils = require('./utils.js');
 var password = require('password');
 var cradle = require('cradle'); // Persistance
-var db = new(cradle.Connection)().database('_users_testing');
+var db = new(cradle.Connection)().database('testing_users');
 
 // TODO move all of this to its own logging.js
 // Set up logging
@@ -41,7 +41,7 @@ winston.loggers.add('couchlog', {
     couchdb: {
         host: 'localhost',
         port: 5984,
-        db: 'winston-testing'
+        db: 'testing_winston'
     }
 });
 var couchlog = winston.loggers.get('couchlog');
@@ -150,7 +150,7 @@ var processMessage = function(api, event, record) {
     var currentModule = user.currentModule;
     // If the user has set a language, use it, otherwise EN
     var language  = user.language || 'en';
-    text = texts[language];
+    var text = texts[language];
     if ( event.arguments[0] === command + 'start' ) {
         //=================================================================
         // User sent /start command (could send this always for new users)
@@ -377,7 +377,7 @@ exports.run = function(api, event) {
         if ( err ) {
             filelog.info(err);
             if (err.error === 'not_found') { // No user, create one
-                user = { // Object that we want to persist
+                var user = { // Object that we want to persist
                     sender_id: event.sender_id,
                     name: userFullName,
                     name_pretty: event.sender_name,
